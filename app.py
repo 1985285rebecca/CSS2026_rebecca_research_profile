@@ -27,8 +27,36 @@ st.write(f"**Institution:** {institution}")
 # Add a section for publications
 st.header("Publications")
 if uploaded_file is not None:
-    # Add the encoding parameter here
-    publications = pd.read_csv(uploaded_file, encoding='latin1', on_bad_lines='skip', encoding_errors='replace')
+    # We try multiple encodings because "UnicodeDecodeError" is picky
+    for enc in ['utf-8', 'latin1', 'cp1252', 'utf-16']:
+        try:
+            uploaded_file.seek(0)  # Reset the file pointer to the start
+            publications = pd.read_csv(uploaded_file, encoding=enc)
+            st.success(f"Successfully loaded using {enc} encoding!")
+            break # It worked! Stop the loop.
+        except UnicodeDecodeError:
+            continue # Try the next encoding in the list
+        except Exception as e:
+            st.error(f"A different error occurred: {e}")
+            break
+    else:
+        st.error("Could not decode the file. Please try saving your CSV as 'UTF-8' in Excel.")
+
+    # Only show the table if 'publications' was successfully created
+    if 'publications' in locals():
+        st.write(publications)
+
+
+
+
+
+
+
+
+
+
+
+
 
     # Add filtering for year or keyword
 keyword = st.text_input("Filter by keyword", "")
@@ -58,6 +86,7 @@ st.header("Explore STEM Data")
 st.header("Contact Information")
 email = "jane.doe@example.com"
 st.write(f"You can reach {name} at {email}.")
+
 
 
 

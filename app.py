@@ -15,8 +15,6 @@ st.write(f"**Name:** {name}")
 st.write(f"**Field of Research:** {field}")
 st.write(f"**Institution:** {institution}")
 
-st.image("https://share.google/FbLbpMtzIWgRwmWPA",
-    caption="Supply(Pixabay)")
 
 # Add a section for publications
 st.header("Publications")
@@ -73,3 +71,4 @@ elif data_option == "Weather Data":
 st.header("Contact Information")
 email = "jane.doe@example.com"
 st.write(f"You can reach {name} at {email}.")
+

@@ -52,12 +52,6 @@ if uploaded_file:
 
 
 st.header("Explore Procurement Data")
-
-
-if uploaded_file is not None:
-    df_filtered = publications
-    dept_counts = df_filtered['Description of goods,services and works'].value_counts().reset_index()
-    dept_counts.columns = ['Description of goods, services and works', 'Count']
     
     fig = px.bar(
         dept_counts.head(15), 
@@ -71,6 +65,7 @@ if uploaded_file is not None:
 st.header("Contact Information")
 email = "rebecca.setino@gmail.com"
 st.write(f"You can reach {name} at {email}.")
+
 
 
 

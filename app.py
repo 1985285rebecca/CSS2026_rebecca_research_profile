@@ -7,7 +7,7 @@ Created on Mon Feb  2 11:46:13 2026
 """
 
 import streamlit as st
-
+import pandas as pd
 
 # Title of the app
 st.title("Researcher Profile Page with Supply Chain Data")
@@ -27,8 +27,7 @@ st.write(f"**Institution:** {institution}")
 
 # Add a section for publications
 st.header("Publications")
-publications = pd.read_csv(uploaded_file)
-
+uploaded_file = st.file_uploader("Upload a CSV of Publications", type="csv")
 if uploaded_file:
     publications = pd.read_csv(uploaded_file)
     st.dataframe(publications)
@@ -94,6 +93,7 @@ if not etender_df.empty:
 st.header("Contact Information")
 email = "rebecca.setino@gmail.com"
 st.write(f"You can reach {name} at {email}.")
+
 
 
 

@@ -1,78 +1,75 @@
 import streamlit as st
-import pipeline_functions as pf
 
-st.set_page_config(page_title="Top Apps Pipeline", layout="wide")
-st.title("📊 Top Apps Pipeline (Dynamic Filters)")
-st.write("Select the filters below, then run the pipeline and view the result.")
 
-# ---- Category options ----
-CATEGORIES = [
-    "ART_AND_DESIGN",
-    "AUTO_AND_VEHICLES",
-    "BEAUTY",
-    "BOOKS_AND_REFERENCE",
-    "BUSINESS",
-    "COMICS",
-    "COMMUNICATION",
-    "DATING",
-    "EDUCATION",
-    "ENTERTAINMENT",
-    "EVENTS",
-    "FAMILY",
-    "FINANCE",
-    "FOOD_AND_DRINK",
-    "GAME",
-]
+# Title of the app
+st.title("Researcher Profile Page with Supply Chain Data")
 
-# ---- Controls (main page) ----
-col1, col2, col3 = st.columns(3)
+# Collect basic information
+name = "Rebecca Setino"
+field = "Supply Chain"
+institution = "Wits University"
 
-with col1:
-    category = st.selectbox(
-        "Category",
-        options=CATEGORIES,
-        index=CATEGORIES.index("FOOD_AND_DRINK"),
-    )
+# Display basic profile information
+st.header("Researcher Overview")
+st.write(f"**Name:** {name}")
+st.write(f"**Field of Research:** {field}")
+st.write(f"**Institution:** {institution}")
 
-with col2:
-    min_rating = st.number_input(
-        "Minimum rating",
-        min_value=0.0,
-        max_value=5.0,
-        value=4.0,
-        step=0.1,
-    )
+st.image("https://share.google/FbLbpMtzIWgRwmWPA",
+    caption="Supply(Pixabay)")
 
-with col3:
-    min_reviews = st.number_input(
-        "Minimum reviews",
-        min_value=0,
-        value=1000,
-        step=100,
-    )
+# Add a section for publications
+st.header("Publications")
+uploaded_file = st.file_uploader("Upload a CSV of Publications", type="csv")
 
-st.divider()
+    # Add filtering for year or keyword
+    keyword = st.text_input("Filter by keyword", "")
+    if keyword:
+        filtered = publications[
+            publications.apply(lambda row: keyword.lower() in row.astype(str).str.lower().values, axis=1)
+        ]
+        st.write(f"Filtered Results for '{keyword}':")
+        st.dataframe(filtered)
+    else:
+        st.write("Showing all publications")
 
-# ---- Run pipeline ----
-if st.button("▶ Run pipeline"):
-    with st.spinner("Running pipeline..."):
-        apps_data = pf.extract("apps_data.csv")
-        reviews_data = pf.extract("review_data.csv")
+# Add a section for visualizing publication trends
+st.header("Publication Trends")
+if uploaded_file:
+    if "Year" in publications.columns:
+        year_counts = publications["Year"].value_counts().sort_index()
+        st.bar_chart(year_counts)
+    else:
+        st.write("The CSV does not have a 'Year' column to visualize trends.")
 
-        top_apps_data = pf.transform(
-            apps=apps_data,
-            reviews=reviews_data,
-            category=category,
-            min_rating=float(min_rating),
-            min_reviews=int(min_reviews),
-        )
+# Add STEM Data Section
+st.header("Explore STEM Data")
 
-        pf.load(
-            dataframe=top_apps_data,
-            database_name="market_research",
-            table_name="top_apps"
-        )
+elif data_option == "Astronomy Observations":
+    st.write("### Astronomy Observation Data")
+    st.dataframe(astronomy_data)
+    # Add widget to filter by Brightness
+    brightness_filter = st.slider("Filter by Brightness (Magnitude)", -15.0, 5.0, (-15.0, 5.0))
+    filtered_astronomy = astronomy_data[
+        astronomy_data["Brightness (Magnitude)"].between(brightness_filter[0], brightness_filter[1])
+    ]
+    st.write(f"Filtered Results for Brightness Range {brightness_filter}:")
+    st.dataframe(filtered_astronomy)
 
-    st.success("Pipeline completed!")
-    st.write(f"Returned rows: {len(top_apps_data)}")
-    st.dataframe(top_apps_data, use_container_width=True)
+elif data_option == "Weather Data":
+    st.write("### Weather Data")
+    st.dataframe(weather_data)
+    # Add widgets to filter by temperature and humidity
+    temp_filter = st.slider("Filter by Temperature (°C)", -10.0, 40.0, (-10.0, 40.0))
+    humidity_filter = st.slider("Filter by Humidity (%)", 0, 100, (0, 100))
+    filtered_weather = weather_data[
+        weather_data["Temperature (°C)"].between(temp_filter[0], temp_filter[1]) &
+        weather_data["Humidity (%)"].between(humidity_filter[0], humidity_filter[1])
+    ]
+    st.write(f"Filtered Results for Temperature {temp_filter} and Humidity {humidity_filter}:")
+    st.dataframe(filtered_weather)
+
+# Add a contact section
+st.header("Contact Information")
+email = "jane.doe@example.com"
+st.write(f"You can reach {name} at {email}.")

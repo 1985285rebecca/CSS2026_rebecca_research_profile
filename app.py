@@ -50,21 +50,11 @@ if uploaded_file:
     else:
         st.write("The CSV does not have a 'Year' column to visualize trends.")
 
-
-st.header("Explore Procurement Data")
-    
-    fig = px.bar(
-        dept_counts.head(15), 
-        x='Count', 
-        y='Department', 
-        orientation='h', 
-        title="Top 15 Departments by Procurement Volume",
-        color='Count', 
-        color_continuous_scale='Blues')
 # Add a contact section
 st.header("Contact Information")
 email = "rebecca.setino@gmail.com"
 st.write(f"You can reach {name} at {email}.")
+
 
 
 

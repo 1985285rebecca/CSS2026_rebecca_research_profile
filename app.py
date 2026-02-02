@@ -50,12 +50,13 @@ if uploaded_file:
   else: 
         st.error("Column 'Advert Year' not found in the uploaded file.")
 st.header("Publication Trends")
-    st.bar_chart(year_counts)
+st.bar_chart(year_counts)
 
 # Add a contact section
 st.header("Contact Information")
 email = "rebecca.setino@gmail.com"
 st.write(f"You can reach {name} at {email}.")
+
 
 
 

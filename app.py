@@ -46,18 +46,6 @@ if uploaded_file is not None:
     if 'publications' in locals():
         st.write(publications)
 
-
-
-
-
-
-
-
-
-
-
-
-
     # Add filtering for year or keyword
 keyword = st.text_input("Filter by keyword", "")
 if keyword:
@@ -76,16 +64,14 @@ if uploaded_file:
     else:
         st.write("The CSV does not have a 'Year' column to visualize trends.")"""
 
-# Add STEM Data Section
-st.header("Explore STEM Data")
-
-
-
+# Add eTender PortalData Section
+st.header("Explore eTender Portal Data")
 
 # Add a contact section
 st.header("Contact Information")
-email = "jane.doe@example.com"
+email = "rebecca.setino@gmail.com"
 st.write(f"You can reach {name} at {email}.")
+
 
 
 

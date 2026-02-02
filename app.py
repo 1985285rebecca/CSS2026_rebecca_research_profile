@@ -43,12 +43,14 @@ if uploaded_file:
 st.header("Publication Trends")
 
 if uploaded_file:
-    # Check for 'Advert Year' (Matches your CSV column exactly)
+  
     if "Advert Year" in publications.columns:
-        year_counts = publications["Advert Year"].value_counts().sort_index()
         
+        year_counts = publications["Advert Year"].value_counts().sort_index()
         st.bar_chart(year_counts)
-    else:        
+   
+    else:
+        
         st.error("Column 'Advert Year' not found in the uploaded file.")
 st.header("Publication Trends")
     st.bar_chart(year_counts)
@@ -57,6 +59,7 @@ st.header("Publication Trends")
 st.header("Contact Information")
 email = "rebecca.setino@gmail.com"
 st.write(f"You can reach {name} at {email}.")
+
 
 
 

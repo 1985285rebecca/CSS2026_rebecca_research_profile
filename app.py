@@ -26,7 +26,9 @@ st.write(f"**Institution:** {institution}")
 
 # Add a section for publications
 st.header("Publications")
-"""uploaded_file = st.file_uploader("Upload a CSV of Publications", type="csv")
+if uploaded_file is not None:
+    # Add the encoding parameter here
+    publications = pd.read_csv(uploaded_file, encoding='latin1')
 
     # Add filtering for year or keyword
 keyword = st.text_input("Filter by keyword", "")
@@ -56,4 +58,5 @@ st.header("Explore STEM Data")
 st.header("Contact Information")
 email = "jane.doe@example.com"
 st.write(f"You can reach {name} at {email}.")
+
 

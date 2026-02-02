@@ -55,14 +55,6 @@ if uploaded_file:
 # Add  Procurement Data Section
 st.header("Explore Procurement Data")
 
-
-# Metrics
-    m1, m2, m3 = st.columns(3)
-    m1.metric("Total Items", len(df_filtered))
-    m2.metric("Departments", df_filtered['Department'].nunique())
-    latest = df_filtered['Envisaged advert date'].max()
-    m3.metric("Latest Advert", latest.strftime('%Y-%m-%d') if pd.notnull(latest) else "N/A")
-
 # Chart
     dept_counts = df_filtered['Department'].value_counts().reset_index()
     dept_counts.columns = ['Department', 'Count']
@@ -75,6 +67,7 @@ st.header("Explore Procurement Data")
 st.header("Contact Information")
 email = "rebecca.setino@gmail.com"
 st.write(f"You can reach {name} at {email}.")
+
 
 
 

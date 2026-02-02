@@ -28,7 +28,7 @@ st.write(f"**Institution:** {institution}")
 st.header("Publications")
 if uploaded_file is not None:
     # Add the encoding parameter here
-    publications = pd.read_csv(uploaded_file, encoding='latin1')
+    publications = pd.read_csv(uploaded_file, encoding='latin1', on_bad_lines='skip', encoding_errors='replace')
 
     # Add filtering for year or keyword
 keyword = st.text_input("Filter by keyword", "")
@@ -58,5 +58,6 @@ st.header("Explore STEM Data")
 st.header("Contact Information")
 email = "jane.doe@example.com"
 st.write(f"You can reach {name} at {email}.")
+
 
 

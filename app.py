@@ -44,7 +44,7 @@ st.header("Publication Trends")
 
 if uploaded_file:
 # Changed to check for 'Year' since the header is 'Trends'
-    if "`advert year" in publications.columns:
+    if "Advert year" in publications.columns:
         year_counts = publications["Advert year"].value_counts().sort_index()
         st.bar_chart(advert year_counts)
     else:
@@ -54,6 +54,7 @@ if uploaded_file:
 st.header("Contact Information")
 email = "rebecca.setino@gmail.com"
 st.write(f"You can reach {name} at {email}.")
+
 
 
 

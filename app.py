@@ -29,8 +29,7 @@ uploaded_file = st.file_uploader("Upload a CSV of Publications", type="csv")
 if uploaded_file:
     publications = pd.read_csv(uploaded_file)
     st.dataframe(publications)
-
-    # Add filtering for year or keyword
+# Add filtering for year or keyword
     keyword = st.text_input("Filter by keyword", "")
     if keyword:
         filtered = publications[
@@ -42,29 +41,44 @@ if uploaded_file:
         st.write("Showing all publications")
 
 # Add a section for visualizing publication trends
+import streamlit as st
+import pandas as pd
+import plotly.express as px # Added this import
+
+# --- Section 1: Publication Trends ---
 st.header("Publication Trends")
+
 if uploaded_file:
-    if "Department" in publications.columns:
-        departments_counts = publications["Department"].value_counts().sort_index()
+    # Changed to check for 'Year' since the header is 'Trends'
+    if "Year" in publications.columns:
+        year_counts = publications["Year"].value_counts().sort_index()
         st.bar_chart(year_counts)
     else:
         st.write("The CSV does not have a 'Year' column to visualize trends.")
 
-# Add  Procurement Data Section
+# --- Section 2: Procurement Data Section ---
 st.header("Explore Procurement Data")
 
-# Chart
-   dept_counts=df_filtered['Department'].value_counts().reset_index()
-    dept_counts.columns=['Department','Count']
-    fig=px.bar(dept_counts.head(15),x='Count',y='Department',orientation='h', 
-                 title="Top 15 Departments by Procurement Volume",
-                 color='Count',color_continuous_scale='Blues')
-    st.plotly_chart(fig,use_container_width=True)
-
+# Fixed the IndentationError: These lines are now flush to the left
+if uploaded_file is not None:
+    # Ensure df_filtered exists from your previous filtering logic
+    dept_counts = df_filtered['Department'].value_counts().reset_index()
+    dept_counts.columns = ['Department', 'Count']
+    
+    fig = px.bar(
+        dept_counts.head(15), 
+        x='Count', 
+        y='Department', 
+        orientation='h', 
+        title="Top 15 Departments by Procurement Volume",
+        color='Count', 
+        color_continuous_scale='Blues')
+    st.plotly_chart(fig, use_container_width=True)
 # Add a contact section
 st.header("Contact Information")
 email = "rebecca.setino@gmail.com"
 st.write(f"You can reach {name} at {email}.")
+
 
 
 

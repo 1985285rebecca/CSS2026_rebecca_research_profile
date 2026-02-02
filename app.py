@@ -55,12 +55,7 @@ if uploaded_file:
 # Add  Procurement Data Section
 st.header("Explore Procurement Data")
 
-# Filter Logic
- df_filtered = etender_df.copy()
-if selected_dept:
-     df_filtered = df_filtered[df_filtered['Department'].isin(selected_dept)]
-if etender_search:
-        df_filtered = df_filtered[df_filtered['Description of goods, services and works'].str.contains(etender_search, case=False, na=False)]
+
 # Metrics
     m1, m2, m3 = st.columns(3)
     m1.metric("Total Items", len(df_filtered))
@@ -80,6 +75,7 @@ if etender_search:
 st.header("Contact Information")
 email = "rebecca.setino@gmail.com"
 st.write(f"You can reach {name} at {email}.")
+
 
 
 

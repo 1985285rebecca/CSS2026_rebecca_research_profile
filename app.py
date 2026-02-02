@@ -23,8 +23,6 @@ st.write(f"**Name:** {name}")
 st.write(f"**Field of Research:** {field}")
 st.write(f"**Institution:** {institution}")
 
-
-
 # Add a section for publications
 st.header("Publications")
 uploaded_file = st.file_uploader("Upload a CSV of Publications", type="csv")
@@ -56,17 +54,18 @@ if uploaded_file:
 st.header("Explore Procurement Data")
 
 # Chart
-    dept_counts = df_filtered['Department'].value_counts().reset_index()
-    dept_counts.columns = ['Department', 'Count']
-    fig = px.bar(dept_counts.head(15), x='Count', y='Department', orientation='h', 
+   dept_counts=df_filtered['Department'].value_counts().reset_index()
+    dept_counts.columns=['Department','Count']
+    fig=px.bar(dept_counts.head(15),x='Count',y='Department',orientation='h', 
                  title="Top 15 Departments by Procurement Volume",
-                 color='Count', color_continuous_scale='Blues')
-    st.plotly_chart(fig, use_container_width=True)
+                 color='Count',color_continuous_scale='Blues')
+    st.plotly_chart(fig,use_container_width=True)
 
 # Add a contact section
 st.header("Contact Information")
 email = "rebecca.setino@gmail.com"
 st.write(f"You can reach {name} at {email}.")
+
 
 
 

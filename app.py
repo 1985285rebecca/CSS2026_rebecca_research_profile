@@ -40,28 +40,22 @@ if uploaded_file:
     else:
         st.write("Showing all publications")
 
-# Add a section for visualizing publication trends
-import streamlit as st
-import pandas as pd
-import plotly.express as px # Added this import
-
-# --- Section 1: Publication Trends ---
 st.header("Publication Trends")
 
 if uploaded_file:
-    # Changed to check for 'Year' since the header is 'Trends'
+# Changed to check for 'Year' since the header is 'Trends'
     if "Year" in publications.columns:
         year_counts = publications["Year"].value_counts().sort_index()
         st.bar_chart(year_counts)
     else:
         st.write("The CSV does not have a 'Year' column to visualize trends.")
 
-# --- Section 2: Procurement Data Section ---
+
 st.header("Explore Procurement Data")
 
-# Fixed the IndentationError: These lines are now flush to the left
+
 if uploaded_file is not None:
-    # Ensure df_filtered exists from your previous filtering logic
+   
     dept_counts = df_filtered['Department'].value_counts().reset_index()
     dept_counts.columns = ['Department', 'Count']
     
@@ -78,6 +72,7 @@ if uploaded_file is not None:
 st.header("Contact Information")
 email = "rebecca.setino@gmail.com"
 st.write(f"You can reach {name} at {email}.")
+
 
 
 

@@ -24,65 +24,38 @@ st.write(f"**Field of Research:** {field}")
 st.write(f"**Institution:** {institution}")
 
 
-import streamlit as st
-import pandas as pd
-import plotly.express as px
 
-# Set page configuration
-st.set_page_config(page_title="Procurement & Publications Dashboard", layout="wide")
-
-def load_etender_data():
-    try:
-        # Load the local CSV (skipping the title row as per previous step)
-        df = pd.read_csv('Procurement plans - eTenders Portal 2.csv', skiprows=1)
-        date_columns = ['Envisaged advert date', 'Envisaged closing date', 'Envisaged award date']
-        for col in date_columns:
-            df[col] = pd.to_datetime(df[col], errors='coerce')
-        return df
-    except Exception as e:
-        st.error(f"Error loading local eTender data: {e}")
-        return pd.DataFrame()
-
-etender_df = load_etender_data()
-
+# Add a section for publications
 st.header("Publications")
+publications = pd.read_csv(uploaded_file)
 
-if uploaded_file is not None:
-    # Try multiple encodings for the uploaded file
-    publications = None
-    for enc in ['utf-8', 'latin1', 'cp1252', 'utf-16']:
-        try:
-            uploaded_file.seek(0)  # Reset pointer
-            publications = pd.read_csv(uploaded_file, encoding=enc)
-            st.success(f"Successfully loaded publications using {enc} encoding!")
-            break 
-        except UnicodeDecodeError:
-            continue 
-        except Exception as e:
-            st.error(f"A different error occurred: {e}")
-            break
-    
-    if publications is not None:
-        # Keyword Filtering
-        keyword = st.text_input("Filter publications by keyword", "")
-        if keyword:
-            # Search across all columns
-            filtered = publications[publications.apply(lambda row: keyword.lower() in row.astype(str).str.lower().values, axis=1)]
-            st.write(f"Filtered Results for '{keyword}':")
-            st.dataframe(filtered, use_container_width=True)
-        else:
-            st.write("Showing all publications")
-            st.dataframe(publications, use_container_width=True)
+if uploaded_file:
+    publications = pd.read_csv(uploaded_file)
+    st.dataframe(publications)
 
+    # Add filtering for year or keyword
+    keyword = st.text_input("Filter by keyword", "")
+    if keyword:
+        filtered = publications[
+            publications.apply(lambda row: keyword.lower() in row.astype(str).str.lower().values, axis=1)
+        ]
+        st.write(f"Filtered Results for '{keyword}':")
+        st.dataframe(filtered)
+    else:
+        st.write("Showing all publications")
 
-        st.header("Publication Trends")
-        if "Year" in publications.columns:
-            year_counts = publications["Year"].value_counts().sort_index()
-            st.bar_chart(year_counts)
-        else:
-            st.info("The uploaded CSV does not have a 'Year' column to visualize trends.")
-else:
-    st.info("Please upload a CSV file in the sidebar to see the Publications section.")
+# Add a section for visualizing publication trends
+st.header("Publication Trends")
+if uploaded_file:
+    if "Year" in publications.columns:
+        year_counts = publications["Year"].value_counts().sort_index()
+        st.bar_chart(year_counts)
+    else:
+        st.write("The CSV does not have a 'Year' column to visualize trends.")
+
+# Add  Procurement Data Section
+st.header("Explore Procurement Data")
+
 
 st.divider()
 st.header("Explore eTender Portal Data")
@@ -117,15 +90,11 @@ if not etender_df.empty:
                  color='Count', color_continuous_scale='Blues')
     st.plotly_chart(fig, use_container_width=True)
 
-    # Table
-    st.subheader("Procurement Plan Detail View")
-    st.dataframe(df_filtered, use_container_width=True)
-else:
-    st.warning("Local eTender data could not be loaded.")
 # Add a contact section
 st.header("Contact Information")
 email = "rebecca.setino@gmail.com"
 st.write(f"You can reach {name} at {email}.")
+
 
 
 

@@ -46,8 +46,8 @@ if uploaded_file:
 # Add a section for visualizing publication trends
 st.header("Publication Trends")
 if uploaded_file:
-    if "Year" in publications.columns:
-        year_counts = publications["Year"].value_counts().sort_index()
+    if "Department" in publications.columns:
+        departments_counts = publications["Department"].value_counts().sort_index()
         st.bar_chart(year_counts)
     else:
         st.write("The CSV does not have a 'Year' column to visualize trends.")
@@ -93,6 +93,7 @@ if not etender_df.empty:
 st.header("Contact Information")
 email = "rebecca.setino@gmail.com"
 st.write(f"You can reach {name} at {email}.")
+
 
 
 

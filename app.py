@@ -44,9 +44,9 @@ st.header("Publication Trends")
 
 if uploaded_file:
 # Changed to check for 'Year' since the header is 'Trends'
-    if "Advert year" in publications.columns:
-        Advert year_counts = publications["Advert year"].value_counts().sort_index()
-        st.bar_chart(Advert year_counts)
+    if "Advert Year" in publications.columns:
+        Advert Year_counts = publications["Advert Year"].value_counts().sort_index()
+        st.bar_chart(Advert Year_counts)
     else:
         st.write("The CSV does not have a 'Year' column to visualize trends.")
 
@@ -54,6 +54,7 @@ if uploaded_file:
 st.header("Contact Information")
 email = "rebecca.setino@gmail.com"
 st.write(f"You can reach {name} at {email}.")
+
 
 
 

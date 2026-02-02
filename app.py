@@ -55,23 +55,25 @@ st.header("Explore Procurement Data")
 
 
 if uploaded_file is not None:
-   df_filtered = publications
-    dept_counts = df_filtered['Department'].value_counts().reset_index()
-    dept_counts.columns = ['Department', 'Count']
+df_filtered = publications
+dept_counts = df_filtered['Department'].value_counts().reset_index()
+dept_counts.columns = ['Department', 'Count']
     
-    fig = px.bar(
-        dept_counts.head(15), 
-        x='Count', 
-        y='Department', 
-        orientation='h', 
-        title="Top 15 Departments by Procurement Volume",
-        color='Count', 
-        color_continuous_scale='Blues')
-    st.plotly_chart(fig, use_container_width=True)
+fig = px.bar(
+dept_counts.head(15), 
+x='Count', 
+y='Department', 
+orientation='h', 
+title="Top 15 Departments by Procurement Volume",
+color='Count', 
+color_continuous_scale='Blues')
+
+st.plotly_chart(fig, use_container_width=True)
 # Add a contact section
 st.header("Contact Information")
 email = "rebecca.setino@gmail.com"
 st.write(f"You can reach {name} at {email}.")
+
 
 
 

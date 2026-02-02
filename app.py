@@ -67,12 +67,11 @@ if uploaded_file is not None:
         title="Top 15 Departments by Procurement Volume",
         color='Count', 
         color_continuous_scale='Blues')
-
-st.plotly_chart(fig, use_container_width=True)
 # Add a contact section
 st.header("Contact Information")
 email = "rebecca.setino@gmail.com"
 st.write(f"You can reach {name} at {email}.")
+
 
 
 

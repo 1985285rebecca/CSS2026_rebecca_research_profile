@@ -26,7 +26,7 @@ st.write(f"**Institution:** {institution}")
 
 # Add a section for publications
 st.header("Publications")
-uploaded_file = st.file_uploader("Upload a CSV of Publications", type="csv")
+"""uploaded_file = st.file_uploader("Upload a CSV of Publications", type="csv")
 
     # Add filtering for year or keyword
 keyword = st.text_input("Filter by keyword", "")
@@ -44,7 +44,7 @@ if uploaded_file:
         year_counts = publications["Year"].value_counts().sort_index()
         st.bar_chart(year_counts)
     else:
-        st.write("The CSV does not have a 'Year' column to visualize trends.")
+        st.write("The CSV does not have a 'Year' column to visualize trends.")"""
 
 # Add STEM Data Section
 st.header("Explore STEM Data")
@@ -56,3 +56,4 @@ st.header("Explore STEM Data")
 st.header("Contact Information")
 email = "jane.doe@example.com"
 st.write(f"You can reach {name} at {email}.")
+

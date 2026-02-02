@@ -55,33 +55,20 @@ if uploaded_file:
 # Add  Procurement Data Section
 st.header("Explore Procurement Data")
 
-
-st.divider()
-st.header("Explore eTender Portal Data")
-
-if not etender_df.empty:
-    # Sidebar Filters for eTender Data
-    st.sidebar.divider()
-    st.sidebar.subheader("eTender Filters")
-    depts = sorted(etender_df['Department'].unique())
-    selected_dept = st.sidebar.multiselect("Select Department", options=depts)
-    etender_search = st.sidebar.text_input("Search Procurement Description")
-
-    # Filter Logic
-    df_filtered = etender_df.copy()
-    if selected_dept:
-        df_filtered = df_filtered[df_filtered['Department'].isin(selected_dept)]
-    if etender_search:
+# Filter Logic
+ df_filtered = etender_df.copy()
+if selected_dept:
+     df_filtered = df_filtered[df_filtered['Department'].isin(selected_dept)]
+if etender_search:
         df_filtered = df_filtered[df_filtered['Description of goods, services and works'].str.contains(etender_search, case=False, na=False)]
-
-    # Metrics
+# Metrics
     m1, m2, m3 = st.columns(3)
     m1.metric("Total Items", len(df_filtered))
     m2.metric("Departments", df_filtered['Department'].nunique())
     latest = df_filtered['Envisaged advert date'].max()
     m3.metric("Latest Advert", latest.strftime('%Y-%m-%d') if pd.notnull(latest) else "N/A")
 
-    # Chart
+# Chart
     dept_counts = df_filtered['Department'].value_counts().reset_index()
     dept_counts.columns = ['Department', 'Count']
     fig = px.bar(dept_counts.head(15), x='Count', y='Department', orientation='h', 
@@ -93,6 +80,7 @@ if not etender_df.empty:
 st.header("Contact Information")
 email = "rebecca.setino@gmail.com"
 st.write(f"You can reach {name} at {email}.")
+
 
 
 
